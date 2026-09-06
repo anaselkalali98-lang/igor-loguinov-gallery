@@ -49,8 +49,11 @@ h1 em, h2 em { font-style: italic; font-weight: normal; }
 .section-count { margin: 0; color: var(--muted); font-size: 12px; text-align: right; }
 .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px 24px; }
 .art-card { cursor: pointer; }
-.art-image-wrap { overflow: hidden; background: #eeeae2; }
-.art-image { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.art-image-wrap { position: relative; display: grid; place-items: center; min-height: 280px; overflow: hidden; background: #eeeae2; }
+.art-image { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: contain; }
+.image-fallback { display: none; padding: 30px; color: var(--muted); font: 12px var(--sans); text-align: center; text-transform: uppercase; letter-spacing: .08em; }
+.art-image-wrap .image-fallback:not([hidden]), #lightbox-fallback:not([hidden]) { display: block; }
+#lightbox-fallback { color: #c8c4bc; }
 .art-card:focus-visible { outline: 2px solid #8a4a38; outline-offset: 5px; }
 .art-info { display: flex; justify-content: space-between; gap: 12px; padding-top: 12px; }
 .art-title { margin: 0; font: normal 18px/1.2 var(--serif); }
