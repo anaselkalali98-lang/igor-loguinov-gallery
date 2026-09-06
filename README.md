@@ -16,10 +16,15 @@ Opening `index.html` directly also works in most browsers, but a local server is
 
 ## Deploy to Netlify
 
-1. Create a new site in Netlify and connect the Git repository.
-2. Use these exact settings: **Base directory:** empty, **Build command:** empty, **Publish directory:** `.` (the repository root).
-3. Deploy. The included `netlify.toml` also declares `publish = "."`, so a manually selected `public` directory is not needed.
+1. Sign in to Netlify and choose **Add new site → Import an existing project**.
+2. Choose **GitHub**, authorize Netlify if prompted, and select `anaselkalali98-lang/igor-loguinov-gallery`.
+3. Select the `main` branch.
+4. Use these exact settings:
+   - **Base directory:** leave empty
+   - **Build command:** leave empty
+   - **Publish directory:** `.`
+5. Choose **Deploy site**. The repository's `netlify.toml` also sets `publish = "."`, and the root `index.html` should appear at the site URL.
 
-The deploy preview should show `index.html` at the site root. If Netlify previously reported “Page not found”, open **Site configuration → Build & deploy → Continuous deployment → Build settings**, clear any `public` or `dist` publish directory override, and trigger a fresh deploy from the latest commit.
+If the site already exists and shows “Page not found”, open **Site configuration → Build & deploy → Continuous deployment → Build settings**, remove any `public` or `dist` publish-directory override, save, and choose **Deploys → Trigger deploy → Clear cache and deploy site**. Future pushes to `main` deploy automatically.
 
 The site has no backend, environment variables, or secret requirements.
