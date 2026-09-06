@@ -44,12 +44,13 @@ const artworkFiles = [
 
 const titleFromFilename = (filename) => filename.replace(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}-/i, "").replace(/\.[^.]+$/, "").replace(/\.+$/, "");
 const artworkUrl = (filename) => `public/artworks/${encodeURIComponent(filename).replace(/[!'()*]/g, (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`)}`;
+const whatsappUrl = (title) => `https://wa.me/212651878160?text=${encodeURIComponent(`Hello Igor, I'm interested in "${title}". Could you share availability and purchase details?`)}`;
 const gallery = document.querySelector("#gallery-grid");
 const lightbox = document.querySelector("#lightbox");
 const lightboxImage = document.querySelector("#lightbox-image");
-const lightboxFallback = document.querySelector("#lightbox-fallback");
 const lightboxTitle = document.querySelector("#lightbox-title");
 const lightboxNumber = document.querySelector("#lightbox-number");
+const lightboxInquiry = document.querySelector("#lightbox-inquiry");
 let activeIndex = 0;
 let lastFocusedElement;
 
@@ -60,14 +61,10 @@ artworkFiles.forEach((filename, index) => {
   card.tabIndex = 0;
   card.setAttribute("role", "button");
   card.setAttribute("aria-label", `View ${title}`);
-  card.innerHTML = `<div class="art-image-wrap"><img class="art-image" loading="lazy" src="${artworkUrl(filename)}" alt="${title} by Igor Loguinov"><span class="image-fallback" aria-hidden="true">Image unavailable</span></div><div class="art-info"><h3 class="art-title">${title}</h3><span class="art-number">${String(index + 1).padStart(2, "0")}</span></div>`;
-  const image = card.querySelector(".art-image");
-  image.addEventListener("error", () => {
-    image.hidden = true;
-    card.querySelector(".image-fallback").hidden = false;
-  }, { once: true });
+  card.innerHTML = `<div class="art-image-wrap"><img class="art-image" loading="lazy" src="${artworkUrl(filename)}" alt="${title} by Igor Loguinov"></div><div class="art-info"><div><h3 class="art-title">${title}</h3><p class="art-detail">Original work · Inquire for availability</p></div><span class="art-number">${String(index + 1).padStart(2, "0")}</span></div><a class="art-inquiry" href="${whatsappUrl(title)}" target="_blank" rel="noreferrer">Inquire to purchase <span aria-hidden="true">↗</span></a>`;
   card.addEventListener("click", () => openLightbox(index));
   card.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openLightbox(index); } });
+  card.querySelector(".art-inquiry").addEventListener("click", (event) => event.stopPropagation());
   gallery.appendChild(card);
 });
 
@@ -76,10 +73,9 @@ function openLightbox(index) {
   const filename = artworkFiles[activeIndex];
   lightboxImage.src = artworkUrl(filename);
   lightboxImage.alt = `${titleFromFilename(filename)} by Igor Loguinov`;
-  lightboxImage.hidden = false;
-  lightboxFallback.hidden = true;
   lightboxTitle.textContent = titleFromFilename(filename);
   lightboxNumber.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(artworkFiles.length).padStart(2, "0")}`;
+  lightboxInquiry.href = whatsappUrl(titleFromFilename(filename));
   lastFocusedElement = document.activeElement;
   lightbox.hidden = false;
   document.body.classList.add("is-locked");
@@ -94,10 +90,6 @@ function moveLightbox(direction) { openLightbox(activeIndex + direction); }
 document.querySelector(".lightbox-close").addEventListener("click", closeLightbox);
 document.querySelector(".lightbox-prev").addEventListener("click", () => moveLightbox(-1));
 document.querySelector(".lightbox-next").addEventListener("click", () => moveLightbox(1));
-lightboxImage.addEventListener("error", () => {
-  lightboxImage.hidden = true;
-  lightboxFallback.hidden = false;
-});
 lightbox.addEventListener("click", (event) => { if (event.target === lightbox) closeLightbox(); });
 document.addEventListener("keydown", (event) => {
   if (lightbox.hidden) return;

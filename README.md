@@ -1,6 +1,6 @@
 # Igor Loguinov — Online Gallery
 
-A dependency-free, responsive artist portfolio and online gallery for Igor Loguinov. Every image in `public/artworks` is included in the gallery and its title is derived from the filename.
+A dependency-free, responsive artist portfolio and online gallery for Igor Loguinov. Every intended image in `public/artworks` is included in the gallery and its title is derived from the filename. The two clipboard/screenshot files are intentionally excluded.
 
 ## Run locally
 
@@ -26,5 +26,9 @@ Opening `index.html` directly also works in most browsers, but a local server is
 5. Choose **Deploy site**. The repository's `netlify.toml` also sets `publish = "."`, and the root `index.html` should appear at the site URL.
 
 If the site already exists and shows “Page not found”, open **Site configuration → Build & deploy → Continuous deployment → Build settings**, remove any `public` or `dist` publish-directory override, save, and choose **Deploys → Trigger deploy → Clear cache and deploy site**. Future pushes to `main` deploy automatically.
+
+## Artwork inquiries
+
+Each artwork card and lightbox includes an **Inquire to purchase** link. It opens WhatsApp at `https://wa.me/212651878160` with an artwork-specific message containing the title and a request for availability and purchase details. The general contact CTA uses the same WhatsApp number, while the Facebook studio link remains available for social contact.
 
 The site has no backend, environment variables, or secret requirements.
