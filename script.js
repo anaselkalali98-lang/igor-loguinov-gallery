@@ -1,6 +1,5 @@
 const artworkFiles = [
   "0cc47e08-29d0-4780-b944-710f8eff0ce2-Tiny ship of hope..jpg",
-  "0cdb8930-9930-4103-8aa2-a977a785690a-clipboard.png",
   "0d29fe3d-4d94-4ba4-8639-16e478a01d6f-Deaf-mute sages.jpg",
   "2d2b1d10-0049-4071-baa5-0d43dda2f403-Rabat.jpg",
   "2ebc4444-1430-4fcd-8e86-cfce9f084f61-General rehearsal.jpg",
@@ -34,7 +33,6 @@ const artworkFiles = [
   "c9f8b5e3-b785-4ee3-a244-cd28ea8dc49f-Charisma..jpg",
   "c38ada7b-bc68-4490-bcbe-774160700d68-Rabat Stories. The medina in pink..jpg",
   "c48f2364-b9ae-4ac6-895a-371a5de69862-Decorative composition based on deconstruction and reverse synthesis of the generalised form of a Moroccan teapot..jpg",
-  "cdd0b71d-c0db-4af0-9841-06141ce54bc6-0cdb8930-9930-4103-8aa2-a977a785690a-clipboard.png",
   "d26cc06e-943b-4f1b-b354-72924e2d283c-I testify.jpg",
   "e1823a92-9c4a-4ab3-b27e-e7390962baad-We wish you nothing but the best.jpg",
   "e8651a5f-6720-49e0-8085-887a0647b3d9-You are an ant.jpg",
