@@ -75,6 +75,9 @@ h1 em, h2 em { font-style: italic; font-weight: normal; }
 .about-mark { display: block; margin-top: 42px; color: #b9b2a8; font: italic 110px/.75 var(--serif); }
 .about-copy { max-width: 540px; }
 .about-copy h2 { margin-bottom: 35px; }
+.about-featured-artwork { margin: 0 0 28px; padding: 12px; background: var(--surface); border: 1px solid var(--rule); }
+.about-featured-artwork img { display: block; width: 100%; max-height: 450px; object-fit: contain; background: #eeeae2; }
+.about-featured-artwork figcaption { padding-top: 10px; color: var(--muted); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
 .about-copy p { max-width: 430px; color: var(--muted); }
 .about-copy .text-link { margin-top: 8px; }
 
