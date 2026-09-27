@@ -53,6 +53,12 @@ h1 em, h2 em { font-style: italic; font-weight: normal; }
 .section-heading h2, .about-copy h2, .contact-row h2 { margin: 8px 0 0; font: normal clamp(2.5rem, 5vw, 4.5rem)/1 var(--serif); }
 .section-count { margin: 0; color: var(--muted); font-size: 12px; text-align: right; }
 .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 50px 24px; }
+.latest-section { padding-top: 12px; }
+.latest-section .section-heading { border-bottom-color: #c8b9a2; }
+.latest-grid { gap: 34px 24px; }
+.latest-grid .art-image-wrap { background: #f0ede7; }
+.latest-grid .art-card { padding: 12px; background: var(--surface); border: 1px solid var(--rule); }
+.latest-grid .art-image { height: 340px; aspect-ratio: auto; }
 .art-card { cursor: pointer; }
 .art-image-wrap { position: relative; display: grid; place-items: center; min-height: 280px; overflow: hidden; background: #eeeae2; }
 .art-image { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: contain; }
@@ -60,6 +66,7 @@ h1 em, h2 em { font-style: italic; font-weight: normal; }
 .art-info { display: flex; justify-content: space-between; gap: 12px; padding-top: 12px; }
 .art-title { margin: 0; font: normal 18px/1.2 var(--serif); }
 .art-detail, .lightbox-detail { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+.art-availability { display: inline-block; margin-bottom: 6px; color: #3e6b50; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .art-number { color: var(--muted); font-size: 12px; }
 .art-inquiry { display: inline-flex; gap: 8px; margin-top: 14px; color: #8a4a38; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
 .art-inquiry:hover { text-decoration: underline; }
@@ -107,6 +114,9 @@ h1 em, h2 em { font-style: italic; font-weight: normal; }
   .section-heading { display: block; }
   .section-count { margin-top: 12px; text-align: left; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 38px 14px; }
+  .latest-grid { gap: 16px 10px; }
+  .latest-grid .art-card { padding: 8px; }
+  .latest-grid .art-image { height: 250px; }
   .art-title { font-size: 15px; }
   .about-mark { margin: 30px 0 55px; font-size: 90px; }
   .contact-row { display: block; }

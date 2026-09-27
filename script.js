@@ -42,40 +42,87 @@ const artworkFiles = [
   "ff355eb7-509f-4996-9f7e-c8f735cff552-Instinct..jpg"
 ];
 
+const latestArtworks = [
+  { filename: "An enticing descent 70x180.jpg", title: "An Enticing Descent", dimensions: "70 × 180 cm", available: true },
+  { filename: "The Secret Path 70x180.jpg", title: "The Secret Path", dimensions: "70 × 180 cm", available: true },
+  { filename: "Dreams of the immanent 135x90.jpg", title: "Dreams of the Immanent", dimensions: "135 × 90 cm", available: true }
+];
 const titleFromFilename = (filename) => filename.replace(/^[0-9a-f]{8}(?:-[0-9a-f]{4}){3}-[0-9a-f]{12}-/i, "").replace(/\.[^.]+$/, "").replace(/\.+$/, "");
 const artworkUrl = (filename) => `public/artworks/${encodeURIComponent(filename).replace(/[!'()*]/g, (character) => `%${character.charCodeAt(0).toString(16).toUpperCase()}`)}`;
-const whatsappUrl = (title) => `https://wa.me/212651878160?text=${encodeURIComponent(`Hello Igor, I'm interested in "${title}". Could you share availability and purchase details?`)}`;
+const allArtworks = [...latestArtworks, ...artworkFiles.map((filename) => ({ filename, title: titleFromFilename(filename), dimensions: "", available: false }))];
+const whatsappUrl = (artwork) => `https://wa.me/212651878160?text=${encodeURIComponent(`Hello Igor, I'm interested in "${artwork.title}"${artwork.dimensions ? ` (${artwork.dimensions})` : ""}. Could you share availability and purchase details?`)}`;
+const latestGallery = document.querySelector("#latest-grid");
 const gallery = document.querySelector("#gallery-grid");
 const lightbox = document.querySelector("#lightbox");
 const lightboxImage = document.querySelector("#lightbox-image");
 const lightboxTitle = document.querySelector("#lightbox-title");
 const lightboxNumber = document.querySelector("#lightbox-number");
+const lightboxDetail = document.querySelector("#lightbox-detail");
 const lightboxInquiry = document.querySelector("#lightbox-inquiry");
 let activeIndex = 0;
 let lastFocusedElement;
 
-artworkFiles.forEach((filename, index) => {
-  const title = titleFromFilename(filename);
+function createArtworkCard(artwork, index, displayNumber = index + 1) {
   const card = document.createElement("article");
   card.className = "art-card";
   card.tabIndex = 0;
   card.setAttribute("role", "button");
-  card.setAttribute("aria-label", `View ${title}`);
-  card.innerHTML = `<div class="art-image-wrap"><img class="art-image" loading="lazy" src="${artworkUrl(filename)}" alt="${title} by Igor Loguinov"></div><div class="art-info"><div><h3 class="art-title">${title}</h3><p class="art-detail">Original work · Inquire for availability</p></div><span class="art-number">${String(index + 1).padStart(2, "0")}</span></div><a class="art-inquiry" href="${whatsappUrl(title)}" target="_blank" rel="noreferrer">Inquire to purchase <span aria-hidden="true">↗</span></a>`;
+  card.setAttribute("aria-label", `View ${artwork.title}`);
+  const imageWrap = document.createElement("div");
+  imageWrap.className = "art-image-wrap";
+  const image = document.createElement("img");
+  image.className = "art-image";
+  image.loading = artwork.available ? "eager" : "lazy";
+  image.src = artworkUrl(artwork.filename);
+  image.alt = `${artwork.title} by Igor Loguinov`;
+  imageWrap.appendChild(image);
+  const info = document.createElement("div");
+  info.className = "art-info";
+  const description = document.createElement("div");
+  const title = document.createElement("h3");
+  title.className = "art-title";
+  title.textContent = artwork.title;
+  if (artwork.available) {
+    const availability = document.createElement("span");
+    availability.className = "art-availability";
+    availability.textContent = "Available now";
+    description.append(availability);
+  }
+  const detail = document.createElement("p");
+  detail.className = "art-detail";
+  detail.textContent = artwork.available ? artwork.dimensions : "Original work · Inquire for availability";
+  description.append(title, detail);
+  const number = document.createElement("span");
+  number.className = "art-number";
+  number.textContent = String(displayNumber).padStart(2, "0");
+  info.append(description, number);
+  const inquiry = document.createElement("a");
+  inquiry.className = "art-inquiry";
+  inquiry.href = whatsappUrl(artwork);
+  inquiry.target = "_blank";
+  inquiry.rel = "noreferrer";
+  inquiry.textContent = "Inquire to purchase ↗";
+  card.append(imageWrap, info, inquiry);
   card.addEventListener("click", () => openLightbox(index));
-  card.addEventListener("keydown", (event) => { if (event.key === "Enter" || event.key === " ") { event.preventDefault(); openLightbox(index); } });
-  card.querySelector(".art-inquiry").addEventListener("click", (event) => event.stopPropagation());
-  gallery.appendChild(card);
-});
+  card.addEventListener("keydown", (event) => { if (event.target === card && (event.key === "Enter" || event.key === " ")) { event.preventDefault(); openLightbox(index); } });
+  inquiry.addEventListener("click", (event) => event.stopPropagation());
+  return card;
+}
+
+latestArtworks.forEach((artwork, index) => latestGallery.appendChild(createArtworkCard(artwork, index)));
+artworkFiles.forEach((filename, index) => gallery.appendChild(createArtworkCard(allArtworks[latestArtworks.length + index], latestArtworks.length + index, index + 1)));
 
 function openLightbox(index) {
-  activeIndex = (index + artworkFiles.length) % artworkFiles.length;
-  const filename = artworkFiles[activeIndex];
-  lightboxImage.src = artworkUrl(filename);
-  lightboxImage.alt = `${titleFromFilename(filename)} by Igor Loguinov`;
-  lightboxTitle.textContent = titleFromFilename(filename);
-  lightboxNumber.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(artworkFiles.length).padStart(2, "0")}`;
-  lightboxInquiry.href = whatsappUrl(titleFromFilename(filename));
+  activeIndex = (index + allArtworks.length) % allArtworks.length;
+  const artwork = allArtworks[activeIndex];
+  lightboxImage.src = artworkUrl(artwork.filename);
+  lightboxImage.alt = `${artwork.title} by Igor Loguinov`;
+  lightboxTitle.textContent = artwork.title;
+  lightboxDetail.textContent = artwork.available
+    ? `${artwork.dimensions} · Available now`
+    : "Original artwork · Availability on request";
+  lightboxNumber.textContent = `${String(activeIndex + 1).padStart(2, "0")} / ${String(allArtworks.length).padStart(2, "0")}`;
+  lightboxInquiry.href = whatsappUrl(artwork);
   lastFocusedElement = document.activeElement;
   lightbox.hidden = false;
   document.body.classList.add("is-locked");

@@ -2,6 +2,8 @@
 
 A dependency-free, responsive artist portfolio and online gallery for Igor Loguinov. Every intended image in `public/artworks` is included in the gallery and its title is derived from the filename. The two clipboard/screenshot files are intentionally excluded.
 
+The **Latest available** section appears above the existing works and features three available original paintings: *An Enticing Descent* (70 × 180 cm), *The Secret Path* (70 × 180 cm), and *Dreams of the Immanent* (135 × 90 cm). Their cards and lightbox views include artwork-specific WhatsApp inquiry links.
+
 ## Run locally
 
 Because this is a static site, no install step is required. From the repository root, use any local static server, for example:
