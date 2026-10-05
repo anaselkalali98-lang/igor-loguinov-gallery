@@ -1,36 +1,47 @@
-# Igor Loguinov — Online Gallery
+# Last-Minute Gifts
 
-A dependency-free, responsive artist portfolio and online gallery for Igor Loguinov. Every intended image in `public/artworks` is included in the gallery and its title is derived from the filename. The two clipboard/screenshot files are intentionally excluded.
+A one-page French landing page for a same-day gift delivery service in Casablanca, Morocco. Customers browse gift packs, tap a button, and start an order on WhatsApp. Gifts are prepared by hand and delivered in 2 to 3 hours.
 
-The **Latest available** section appears above the existing works and features three available original paintings: *An Enticing Descent* (70 × 180 cm), *The Secret Path* (70 × 180 cm), and *Dreams of the Immanent* (135 × 90 cm). Their cards and lightbox views include artwork-specific WhatsApp inquiry links.
+*Page d'accueil en français pour un service de cadeaux livrés en 2 à 3 heures à Casablanca. Les commandes se font par WhatsApp.*
 
-## Run locally
+## Features
 
-Because this is a static site, no install step is required. From the repository root, use any local static server, for example:
+- Five gift packs with prices in MAD: Petit geste, Anniversaire, Romantique, Surprise sur mesure, and Box Surprise Totale.
+- Every pack includes a small surprise box.
+- "Cadeau secret" option: a handmade framed card with a personal message.
+- 2 to 3 hour delivery section (Casablanca only, payment on delivery).
+- Every button opens WhatsApp with a ready-made message, so the seller can ask about the receiver's age, gender, occasion and budget.
+- Floating WhatsApp button, mobile-first layout, light and fast.
 
-```bash
-python -m http.server 8080
+## Tech
+
+- Plain HTML, CSS and a few lines of JavaScript in a single `index.html`. No framework and no build step.
+- Inline SVG illustrations as a fallback when a photo is missing.
+- Google Fonts: Young Serif and Figtree.
+
+## Project structure
+
+```
+index.html            the whole page
+cadeau-secret.png     photo for the secret gift section
+photos/               pack photos (petit-geste, anniversaire, romantique,
+                      sur-mesure, box-surprise-totale .jpg)
 ```
 
-Then open [http://localhost:8080](http://localhost:8080).
+## Customize
 
-Opening `index.html` directly also works in most browsers, but a local server is recommended so asset paths behave exactly as they will in deployment.
+- **WhatsApp number:** change `NUM` in the script at the bottom of `index.html` (international format, no `+`).
+- **Prices and texts:** edit them directly in `index.html`.
+- **Photos:** replace the files in `photos/` and keep the same names.
 
-## Deploy to Netlify
+## Deploy
 
-1. Sign in to Netlify and choose **Add new site → Import an existing project**.
-2. Choose **GitHub**, authorize Netlify if prompted, and select `anaselkalali98-lang/igor-loguinov-gallery`.
-3. Select the `main` branch.
-4. Use these exact settings:
-   - **Base directory:** leave empty
-   - **Build command:** leave empty
-   - **Publish directory:** `.`
-5. Choose **Deploy site**. The repository's `netlify.toml` also sets `publish = "."`, and the root `index.html` should appear at the site URL.
+This is a static site. On Netlify choose *Add new site → Import an existing project → GitHub*, leave the build command empty and the publish directory blank. Every commit redeploys the site.
 
-If the site already exists and shows “Page not found”, open **Site configuration → Build & deploy → Continuous deployment → Build settings**, remove any `public` or `dist` publish-directory override, save, and choose **Deploys → Trigger deploy → Clear cache and deploy site**. Future pushes to `main` deploy automatically.
+## Note on images
 
-## Artwork inquiries
+The pack photos are AI-generated illustrations. The page states that the exact content may vary depending on the flowers and products of the day.
 
-Each artwork card and lightbox includes an **Inquire to purchase** link. It opens WhatsApp at `https://wa.me/212651878160` with an artwork-specific message containing the title and a request for availability and purchase details. The general contact CTA uses the same WhatsApp number, while the Facebook studio link remains available for social contact.
+## Author
 
-The site has no backend, environment variables, or secret requirements.
+Made by Maicon, Casablanca.
